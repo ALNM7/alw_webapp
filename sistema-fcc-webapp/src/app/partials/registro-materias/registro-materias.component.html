@@ -1,0 +1,88 @@
+<div class="section-registro">
+  <div class="header-registro">
+    <span *ngIf="!editar" class="title">Registrar Materia</span>
+    <span *ngIf="editar" class="title">Actualizar Materia</span>
+  </div>
+  <div class="body-registro">
+    <div class="row mt-3 mb-3">
+      <div class="form-group col-12">
+        <label class="title-user" for="tipo_usuario">Ingresa los datos de la Materia</label>
+      </div>
+    </div>
+    <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>NRC</mat-label>
+        <input matInput [(ngModel)]="materia.nrc" name="id" placeholder="Escribe NRC de la materia" [disabled]="editar">
+    </mat-form-field>
+    <div *ngIf="errors.nrc" class="invalid-feedback">{{ errors.nrc }}</div>
+
+    <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Nombre de la materia </mat-label>
+        <input matInput [(ngModel)]="materia.nombre_materia" placeholder="Escribe nombre de la materia">
+    </mat-form-field>
+    <div *ngIf="errors.nombre_materia" class="invalid-feedback">{{ errors.nombre_materia }}</div>
+
+    <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Seccion</mat-label>
+        <input matInput [(ngModel)]="materia.seccion" placeholder="Escribe la seccion de la materia">
+    </mat-form-field>
+    <div *ngIf="errors.seccion" class="invalid-feedback">{{ errors.seccion }}</div>
+
+    <mat-form-field class="mat-input" appearance="outline">
+      <mat-label>Hora Inicio</mat-label>
+      <input matInput placeholder="Time" [ngxTimepicker]="inicio" type="string" [(ngModel)]="materia.hora_inicio">
+      <ngx-material-timepicker #inicio></ngx-material-timepicker>
+  </mat-form-field>
+  <div *ngIf="errors.hora_inicio" class="invalid-feedback">{{ errors.hora_inicio }}</div>
+
+
+  <mat-form-field class="mat-input" appearance="outline">
+    <mat-label>Hora Fin</mat-label>
+    <input matInput placeholder="Time" [ngxTimepicker]="fin" type="string" [(ngModel)]="materia.hora_fin">
+    <ngx-material-timepicker #fin></ngx-material-timepicker>
+</mat-form-field>
+<div *ngIf="errors.hora_fin" class="invalid-feedback">{{ errors.hora_fin }}</div>
+<!--ESTO ME SERVIRA DESPUES mask='(000) 000-0000'  style="text-transform: uppercase;  -->
+  
+
+<mat-form-field class="mat-input" appearance="outline">
+      <mat-label>Salon</mat-label>
+      <input matInput [(ngModel)]="materia.salon" placeholder="Escribe el salon">
+    </mat-form-field>
+    <div *ngIf="errors.salon" class="invalid-feedback">{{ errors.salon }}</div>
+
+    <mat-form-field class="mat-input" appearance="outline">
+      <mat-label>Programa Educativo</mat-label>
+      <mat-select [(ngModel)]="materia.programa_educativo" (selectionChange)="changeSelect($event)">
+        <mat-option *ngFor="let programa of programa_educativo" [value]="programa.viewValue">
+          {{programa.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="errors.programa_educativo" class="invalid-feedback">{{ errors.programa_educativo }}</div>
+
+
+    <div class="select-materias">
+      <div class="row mt-3 mb-3">
+        
+        
+        <div class="form-group col-12">
+          <label class="title-materias" for="tipo_usuario">Selecciona las materias a impartir</label>
+        </div>
+      </div>
+      <div class="checkbox-group" *ngFor="let dia of dias; let i = index">
+        <mat-checkbox class="checkbox-item opc-sc" name="opsc" (change)="checkboxChange($event)" value="{{dia.nombre}}" [checked]="revisarSeleccion(dia.nombre)" >
+            <div class="d-checkbox-nombre">{{dia.nombre}}</div>
+        </mat-checkbox>
+      </div>
+    </div>
+    <div *ngIf="errors.dias" class="invalid-feedback">{{ errors.dias_json }}</div>
+
+
+
+    <div class="section-buttons">
+        <button class="btn btn-danger" (click)="regresar()">Cancelar</button>
+        <button *ngIf="!editar" class="btn btn-primary" type="submit" (click)="registrarM()">Registrar</button>
+        <button *ngIf="editar" class="btn btn-primary" type="submit" (click)="actualizar()">Actualizar</button>
+    </div>
+  </div>
+</div>
